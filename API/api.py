@@ -1,19 +1,30 @@
 import requests
 
-cpf = '93806832'
+cep = '938.068-32'
 cpf1 = '93821248'
 
-link = f'https://viacep.com.br/ws/{cpf1}/json/'
+cep = cep.replace('-','').replace('.','').replace(' ', '')
+print(cep)
 
-requisicao = requests.get(link)
+if len(cep) == 8:
+    link = f'https://viacep.com.br/ws/{cep}/json/'
 
-#print(requisicao)
+    requisicao = requests.get(link)
 
-json_cep = requisicao.json()
-print(json_cep)
+    #print(requisicao)
 
-uf = json_cep['uf']
-rua = json_cep['logradouro']
-bairro = json_cep['bairro']
-cidade = json_cep['localidade']
-print(uf, rua, bairro)
+    json_cep = requisicao.json()
+    print(json_cep)
+
+    uf = json_cep['uf']
+    rua = json_cep['logradouro']
+    bairro = json_cep['bairro']
+    cidade = json_cep['localidade']
+    print(uf, rua, bairro)
+
+else:
+    print('CEP invalido')
+
+# busca do CPF a partir do Endereço
+
+
