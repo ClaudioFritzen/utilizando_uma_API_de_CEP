@@ -15,3 +15,7 @@ def Consulta_cep(request):
   <input type="text" id="bairro" name="bairro" disabled>
 </form>
 """)
+    elif request.method == "POST":
+        pass
+       
+    
