@@ -4,18 +4,22 @@ from django.http import HttpResponse
 # Create your views here.
 def Consulta_cep(request):
     if request.method == 'GET':
-        return HttpResponse ("""<form>
-  <label for="cep">CEP:</label>
-  <input type="text" id="cep" name="cep">
-  <br>
-  <label for="rua">Rua:</label>
-  <input type="text" id="rua" name="rua" disabled>
-  <br>
-  <label for="bairro">Bairro:</label>
-  <input type="text" id="bairro" name="bairro" disabled>
-</form>
-""")
+        return render(request, 'index.html')
     elif request.method == "POST":
         pass
        
-    
+import requests
+
+def get_address(cep:str):
+
+    url = f'https://viacep.com.br/ws/{cep}/json/'
+    response = requests.get(url)
+    data = response.json()
+    return data.get('logradouro',''), data.get('bairro','')
+
+from django.http import JsonResponse
+
+def get_address_view(request):
+    cep = request.GET.get('cep')
+    rua, bairro = get_address(cep)
+    return JsonResponse({'rua': rua, 'bairro': bairro})
